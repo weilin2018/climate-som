@@ -15,8 +15,8 @@ import LatLonIndex
 latIndex = LatLonIndex.findLatIndex(42,[])
 lonIndex = LatLonIndex.findLongIndex(230,[])
 print latIndex
-data = LoadDataYear.loadDataYear(2005, "tasmax", latIndex[0], lonIndex[1])
+print lonIndex
+data = LoadDataYear.loadDataYear(2004, "tasmax", latIndex[0], lonIndex[1])
 #print data
 #plt.plot(data)
 plt.hist(data, range(280,300,1), normed=True)
-

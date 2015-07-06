@@ -15,14 +15,14 @@ def findLatIndex(x,data):
     diff2 = 0
     closesti = sys.maxint
     closestj = sys.maxint
-    
+
     i = sys.maxint
     j = sys.maxint
 
     if len(data) == 0:
-        data = scipy.io.loadmat('tasmax_2005_01_01.mat')   
-        data = data['tasmax_2005_01_01'][0]
-    
+        data = scipy.io.loadmat('tasmax_2004_01_01.mat')
+        data = data['tasmax_2004_01_01'][0]
+
     for i in range(0,len(data[0])):
         for j in range(0, len(data[0][i,:])):
             diff2 = abs(x-data[0][i,j])
@@ -33,19 +33,19 @@ def findLatIndex(x,data):
                 closesti = i
                 closestj = j
     return (closesti, closestj)
-    
+
 def findLongIndex(x,data):
     diff1 = sys.maxint
     diff2 = 0
     closesti = sys.maxint
     closestj = sys.maxint
-    
+
     i = sys.maxint
     j = sys.maxint
-    
+
     if len(data) == 0:
-        data = scipy.io.loadmat('tasmax_2005_01_01.mat') 
-        data = data['tasmax_2005_01_01'][0]
+        data = scipy.io.loadmat('tasmax_2004_01_01.mat')
+        data = data['tasmax_2004_01_01'][0]
 
     for i in range(0,len(data[1])):
         for j in range(0, len(data[1][i,:])):
@@ -55,11 +55,11 @@ def findLongIndex(x,data):
                 closesti = i
                 closestj = j
     return (closesti, closestj)
-    
+
 def findHighestTemp(data):
     high = sys.maxint
     x = []
-    
+
     for i in range(0,len(data[2])):
         currentRow = []
         for j in range(0, len(data[2][i,:])):
@@ -84,4 +84,3 @@ def findHighestTemp(data):
 #plt.title("Daily Temperature")
 
 #plt.show()
-
