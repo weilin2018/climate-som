@@ -76,6 +76,19 @@ def GetWeightedAvg(DataMap, SearchDistance):
         
     return Result
     
+        
+ def GenSOMInput():
+	SOM_Input = []
+	for year in range(1990,2005)
+		row = []
+		latIndex = LatLonIndex.findLatIndex(45,[])
+		lonIndex = LatLonIndex.findLonIndex(200,[])
+		data = LoadDataYear.loadDataYear(year, 'tasmax', latIndex[0], lonIndex[1])
+		for day in data:
+			row.append(day)
+		SOM_Input.append(row)
+	return np.array(SOM_Input)
+    
     #different ranges (use searchdistance variable, )
     
     
