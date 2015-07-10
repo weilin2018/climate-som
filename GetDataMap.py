@@ -26,3 +26,14 @@ def getAreaAvg(data):     #avg temp for each day averaged over x, y coordinates
                 dailySum[i] += data[j][r][i]
         dailySum[i] /= (len(data)*len(data[0]))
     return dailySum
+    
+def getDataMapDay(dataMap,dayNumber):
+    Result_Day = []
+    for i in range(len(dataMap)):
+        row = [] #loops thru the rows (y-coordinates)
+        for j in range(len(dataMap[0])):#loops thru the columns (x-coordinates)
+            row.append(dataMap[i][j][dayNumber])
+        Result_Day.append(row)
+    return Result_Day
+    
+            

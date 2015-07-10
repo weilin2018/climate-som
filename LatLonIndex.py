@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-This is a temporary script file.
-"""
 
 import scipy.io
 import sys # (if you want to call something specific) from sys import maxint
@@ -34,8 +29,7 @@ def findLatIndex(x,data):
                 closestj = j
     return (closesti, closestj)
 
-def findLongIndex(x,data):
-    diff1 = sys.maxint
+def findLonIndex(x,data):
     diff2 = 0
     closesti = sys.maxint
     closestj = sys.maxint
@@ -70,6 +64,21 @@ def findHighestTemp(data):
             currentRow.append(high)
         x.append(currentRow)
     return x
+    
+def findLatLonRange(latRange, lonRange, data):
+    if len(data) == 0:
+        data = scipy.io.loadmat('tasmax_2005_01_01.mat') 
+        data = data['tasmax_2005_01_01'][0]
+    x= findLatIndex(latRange[0], data)
+    y= findLonIndex(lonRange[0], data)
+    z= findLatIndex(latRange[1], data)
+    w= findLonIndex(lonRange[1], data)
+    
+    possibleLat = range(x[0],z[0],1)
+    possibleLon = range(y[1],w[1],1)
+    
+    return (possibleLat,possibleLon)
+    
 
 #y = findHighestTemp(tasmax["tasmax_2005_01_01"][0])
 #print y[65][142]
