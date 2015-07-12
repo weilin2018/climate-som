@@ -6,16 +6,26 @@ Created on Thu Jun 25 16:50:44 2015
 """
 
 import LoadDataYear
+import LatLonIndex
 
 def getDataMap(latRange, lonRange, year, var):
+    latLonRange = LatLonIndex.findLatLonRange(latRange, lonRange, [])
     dataMap = []
-    for i in latRange:
+    lat=[]
+    lon=[]
+    for i in latLonRange[0]:
         row = []
-        for j in lonRange:
+        latrow=[]
+        lonrow=[]
+        for j in latLonRange[1]:
             x= LoadDataYear.loadDataYear(year, var, i, j)
-            row.append(x)
+            latrow.append(x[0])
+            lonrow.append(x[1])
+            row.append(x[2])
         dataMap.append(row)
-    return dataMap
+        lat.append(latrow)
+        lon.append(lonrow)
+    return [lat,lon,dataMap]
     
 def getAreaAvg(data):     #avg temp for each day averaged over x, y coordinates
     dailySum = []
@@ -27,13 +37,11 @@ def getAreaAvg(data):     #avg temp for each day averaged over x, y coordinates
         dailySum[i] /= (len(data)*len(data[0]))
     return dailySum
     
-def getDataMapDay(dataMap,dayNumber):
-    Result_Day = []
-    for i in range(len(dataMap)):
-        row = [] #loops thru the rows (y-coordinates)
-        for j in range(len(dataMap[0])):#loops thru the columns (x-coordinates)
-            row.append(dataMap[i][j][dayNumber])
-        Result_Day.append(row)
-    return Result_Day
-    
-            
+def getTimeAvg(data):
+    timeSum = []
+    for i in range(len(data)):
+        row = []
+        for j in range(len(data[0])):
+            row.append(sum(data[i][j])/len(data[i][j]))
+        timeSum.append(row)
+    return timeSum

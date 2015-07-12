@@ -1,33 +1,48 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul  9 23:42:58 2015
+
+@author: JackieRyu
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul 01 09:35:54 2015
+
+@author: ethan
+"""
+
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy
-import AreaAvgOverTime
+import LatLonIndex
 import GetDataMap
 
-tempData = scipy.io.loadmat('tasmax_2004_01_01.mat')
-tempData = tempData['tasmax_2004_01_01'][0]
+upLat = 40
+lowLat = 20
+lftLon = 70
+rgtLon = 100
 
-latRange = [25,35]
-lonRange = [80,90]
-avgOverTime1990 = AreaAvgOverTime.AreaAvgOverTime([1990,1993], latRange,lonRange)
-avgOverTime2000 = AreaAvgOverTime.AreaAvgOverTime([2000,2005], latRange,lonRange)
-avgOverTime = AreaAvgOverTime.AreaAvgDifference(avgOverTime1990, avgOverTime2000)
+latLonRange = LatLonIndex.findLatLonRange([lowLat, upLat], [lftLon, rgtLon], [])
 
-tempDataLat = avgOverTime1990[0]
-tempDataLon = avgOverTime1990[1]
-tempDataData = avgOverTime
+latRange = latLonRange[0]
+lonRange = latLonRange[1]
+Data = GetDataMap.getDataMap(latRange,lonRange,2004,"tasmax")
+print len(Data[2])
+print len(Data[2][0])
+Data_average = GetDataMap.getTimeAvg(Data[2])
+tempDataLat = Data[0]
+tempDataLon = Data[1]
+tempDataData = Data_average[2]
 
 flatTLat = np.array(tempDataLat)
 flatTLon = np.array(tempDataLon)
 flatTData = np.array(tempDataData)
-print flatTData
-print flatTLat
-print flatTLon
 
 m = Basemap(width=10000000/5,height=7000000/5,
-            resolution='l',projection='stere',
-            lat_ts = 40, lat_0=sum(latRange)/2, lon_0 = sum(lonRange)/2)
+            resolution='l',projection='stere',\
+            lat_ts=40,lat_0=(upLat+lowLat)/2,lon_0=(lftLon+rgtLon)/2)
 
 lon, lat = np.meshgrid(flatTLon[0,:], flatTLat[:,0])
 x, y = m(lon,lat)
@@ -46,7 +61,7 @@ m.drawcountries()
 cbar = m.colorbar(cs, location='bottom', pad="10%")
 
 # Add Title
-plt.title('Mean Temperature in 2000-2004 Relative to 1990-1995')
+plt.title('Temperature Difference 2000-2004 Relative to 1990-1995')
 
 plt.show()
 
