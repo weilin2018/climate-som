@@ -7,14 +7,14 @@ Created on Sat Jul 11 14:50:51 2015
 
 import GetDataMap
 
-def AreaAvgOverTime(timeRange, latRange, lonRange):
+def AreaAvgOverTime(var, timeRange, latRange, lonRange):
     avgOverTime = []
     lat = []
     lon = []
     
     for i in range(timeRange[0],timeRange[1]):
         print i
-        g = GetDataMap.getDataMap(latRange, lonRange, i, 'tasmax')
+        g = GetDataMap.getDataMap(latRange, lonRange, i, 'ccsm4', var)
         if len(lat) == 0:
             lat = g[0]
             lon = g[1]

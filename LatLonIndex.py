@@ -20,7 +20,7 @@ def findLatIndex(x,data):
     j = sys.maxint
 
     if len(data) == 0:
-        data = scipy.io.loadmat('tasmax_2004_01_01.mat')   
+        data = scipy.io.loadmat('data/ccsm4/tasmax/tasmax_2004_01_01.mat')   
         data = data['tasmax_2004_01_01'][0]
     
     for i in range(0,len(data[0])):
@@ -44,7 +44,7 @@ def findLonIndex(x,data):
     j = sys.maxint
     
     if len(data) == 0:
-        data = scipy.io.loadmat('tasmax_2004_01_01.mat') 
+        data = scipy.io.loadmat('data/ccsm4/tasmax/tasmax_2004_01_01.mat') 
         data = data['tasmax_2004_01_01'][0]
 
     for i in range(0,len(data[1])):
@@ -73,7 +73,7 @@ def findHighestTemp(data):
     
 def findLatLonRange(latRange, lonRange, data):
     if len(data) == 0:
-        data = scipy.io.loadmat('tasmax_2004_01_01.mat') 
+        data = scipy.io.loadmat('data/ccsm4/tasmax/tasmax_2004_01_01.mat') 
         data = data['tasmax_2004_01_01'][0]
     x= findLatIndex(latRange[0], data)
     y= findLonIndex(lonRange[0], data)

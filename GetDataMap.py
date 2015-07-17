@@ -7,9 +7,15 @@ Created on Thu Jun 25 16:50:44 2015
 
 import LoadDataYear
 import LatLonIndex
+import scipy.io
 
-def getDataMap(latRange, lonRange, year, var):
-    latLonRange = LatLonIndex.findLatLonRange(latRange, lonRange, [])
+def getDataMap(latRange, lonRange, year, model, var):
+    # load test data file
+    testdata = scipy.io.loadmat(str('data/' + model + '/' + var + '/' + var + '_' + str(year) + '_01' + '_01'))
+    testdata = testdata[str(var + '_' + str(year) + '_01' + '_01')][0]
+    latLonRange = LatLonIndex.findLatLonRange(latRange, lonRange, testdata)
+    
+    
     dataMap = []
     lat=[]
     lon=[]
@@ -18,7 +24,7 @@ def getDataMap(latRange, lonRange, year, var):
         latrow=[]
         lonrow=[]
         for j in latLonRange[1]:
-            x= LoadDataYear.loadDataYear(year, var, i, j)
+            x = LoadDataYear.loadDataYear(year, model, var, latindex = i, lonindex = j)
             latrow.append(x[0])
             lonrow.append(x[1])
             row.append(x[2])
