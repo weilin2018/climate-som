@@ -26,6 +26,7 @@ SOM will map a number of colors into a rectangular area.
 """
 
 from mvpa2.suite import *
+import AreaAvgOverTime
 
 """
 First, we define some colors as RGB values from the interval (0,1),
@@ -35,29 +36,45 @@ variations of 'blue', which are supposed to be represented in more
 detail in the SOM.
 """
 
-colors = np.array(
-         [[0., 0., 0.],
-          [0., 0., 1.],
-          [0., 0., 0.5],
-          [0.125, 0.529, 1.0],
-          [0.33, 0.4, 0.67],
-          [0.6, 0.5, 1.0],
-          [0., 1., 0.],
-          [1., 0., 0.],
-          [0., 1., 1.],
-          [1., 0., 1.],
-          [1., 1., 0.],
-          [1., 1., 1.],
-          [.33, .33, .33],
-          [.5, .5, .5],
-          [.66, .66, .66]])
+latRange = [20,35]
+lonRange = [75,95]
+
+somRows = 5
+somCols = 3
+
+avgOverTime1990 = AreaAvgOverTime.AreaAvgOverTime('tasmax', 'ccsm4', [1990,1991], latRange, lonRange)
+somTempData = []
+for r in range(somRows):
+    somTempData.append(avgOverTime1990[2][r][0:somCols])
+somTempData = np.array(somTempData)
+colors = somTempData
+print colors
+
+color_names = ['a','b','c','d','e','f','g','h','i']
+
+#colors = np.array(
+#         [[0., 0., 0.],
+#          [0., 0., 1.],
+#          [0., 0., 0.5],
+#          [0.125, 0.529, 1.0],
+#          [0.33, 0.4, 0.67],
+#          [0.6, 0.5, 1.0],
+#          [0., 1., 0.],
+#          [1., 0., 0.],
+#          [0., 1., 1.],
+#          [1., 0., 1.],
+#          [1., 1., 0.],
+#          [1., 1., 1.],
+#          [.33, .33, .33],
+#          [.5, .5, .5],
+#          [.66, .66, .66]])
 
 # store the names of the colors for visualization later on
-color_names = \
-        ['black', 'blue', 'darkblue', 'skyblue',
-         'greyblue', 'lilac', 'green', 'red',
-         'cyan', 'violet', 'yellow', 'white',
-         'darkgrey', 'mediumgrey', 'lightgrey']
+#color_names = \
+#        ['black', 'blue', 'darkblue', 'skyblue',
+#         'greyblue', 'lilac', 'green', 'red',
+#         'cyan', 'violet', 'yellow', 'white',
+#         'darkgrey', 'mediumgrey', 'lightgrey']
 
 """
 Now we can instantiate the mapper. It will internally use a so-called
