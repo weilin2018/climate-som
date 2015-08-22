@@ -39,18 +39,26 @@ detail in the SOM.
 latRange = [20,35]
 lonRange = [75,95]
 
-somRows = 5
+somRows = 7
 somCols = 3
 
-avgOverTime1990 = AreaAvgOverTime.AreaAvgOverTime('tasmax', 'ccsm4', [1990,1991], latRange, lonRange)
+avgOverTimeTasmax = AreaAvgOverTime.AreaAvgOverTime('tasmax', 'ccsm4', [1990,1991], latRange, lonRange)
+avgOverTimeHuss = AreaAvgOverTime.AreaAvgOverTime('huss', 'gfdl-cm3', [1990,1991], [30,45], [260,280])
+avgOverTimerh = AreaAvgOverTime.AreaAvgOverTime('rh', 'gfdl-cm3', [1990,1991], [30,45], [260,280])
+
 somTempData = []
 for r in range(somRows):
-    somTempData.append(avgOverTime1990[2][r][0:somCols])
+    row = []
+    row.append(avgOverTimeTasmax[2][r][0])
+    row.append(avgOverTimeHuss[2][r][0])
+    row.append(avgOverTimerh[2][r][0])
+
+    somTempData.append(row)
 somTempData = np.array(somTempData)
 colors = somTempData
 print colors
 
-color_names = ['a','b','c','d','e','f','g','h','i']
+color_names = ['1','2','3','4','5','6','7']
 
 #colors = np.array(
 #         [[0., 0., 0.],
@@ -84,7 +92,7 @@ the mapper. Additionally, we tell it to train the network using 400
 iterations and to use custom learning rate.
 """
 
-som = SimpleSOMMapper((20, 30), 400, learning_rate=0.05)
+som = SimpleSOMMapper((10, 20), 400, learning_rate=0.05)
 
 """
 Finally, we train the mapper with the previously defined 'color' dataset.

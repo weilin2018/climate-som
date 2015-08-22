@@ -7,7 +7,7 @@ import GetDataMap
 
 latRange = [20,35]
 lonRange = [75,95]
-avgOverTime1990 = AreaAvgOverTime.AreaAvgOverTime('pr', [1980,2005], latRange, lonRange)
+avgOverTime1990 = AreaAvgOverTime.AreaAvgOverTime('pr', 'ccsm4', [1990,1991], latRange, lonRange)
 #avgOverTime2000 = AreaAvgOverTime.AreaAvgOverTime([2000,2005], latRange,lonRange)
 #avgOverTime = AreaAvgOverTime.AreaAvgDifference(avgOverTime1990, avgOverTime2000)
 
@@ -18,9 +18,6 @@ tempDataData = avgOverTime1990[2]
 flatTLat = np.array(tempDataLat)
 flatTLon = np.array(tempDataLon)
 flatTData = np.array(tempDataData)
-print flatTData
-print flatTLat
-print flatTLon
 
 m = Basemap(width=10000000/5,height=7000000/5,
             resolution='l',projection='stere',
