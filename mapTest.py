@@ -8,8 +8,6 @@ import GetDataMap
 latRange = [35,40]
 lonRange = [270,280]
 avgOverTime1990 = AreaAvgOverTime.AreaAvgOverTime('wb', 'ncep', [1990,1991], latRange, lonRange)
-#avgOverTime2000 = AreaAvgOverTime.AreaAvgOverTime([2000,2005], latRange,lonRange)
-#avgOverTime = AreaAvgOverTime.AreaAvgDifference(avgOverTime1990, avgOverTime2000)
 
 tempDataLat = avgOverTime1990[0]
 tempDataLon = avgOverTime1990[1]
