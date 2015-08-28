@@ -157,5 +157,3 @@ plt.title('WB projections')
 plt.show()
 
 
-
-
