@@ -1,5 +1,7 @@
 from mvpa2.suite import *
+from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
+import numpy
 import random
 import LoadDataYear
 
@@ -37,7 +39,7 @@ for year in range(baseYearRange[0], baseYearRange[1]):
 somTrainingData = np.array(somTrainingData)
 
 print 'initializing SOM mapper'
-som = SimpleSOMMapper((8, 8), 25, learning_rate = 1e-5)
+som = SimpleSOMMapper((7, 7), 100, learning_rate = 1e-5)
 
 print 'training SOM'
 som.train(somTrainingData)
