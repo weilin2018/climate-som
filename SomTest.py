@@ -1,7 +1,10 @@
 from mvpa2.suite import *
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 import scipy.io
+=======
+>>>>>>> 324c86f7757a1959ecd6dc4e2fb603633aab0283
 import numpy
 import random
 import LoadDataYear
@@ -48,7 +51,11 @@ for year in range(baseYearRange[0], baseYearRange[1]):
 somTrainingData = np.array(somTrainingData)
 
 print 'initializing SOM mapper'
+<<<<<<< HEAD
 som = SimpleSOMMapper((3, 3), 100, learning_rate = 1e-5)
+=======
+som = SimpleSOMMapper((3, 3), 150, learning_rate = 1e-5)
+>>>>>>> 324c86f7757a1959ecd6dc4e2fb603633aab0283
 
 print 'training SOM'
 som.train(somTrainingData)
@@ -158,6 +165,7 @@ for d in range(0, 360, 50):
     m.drawparallels(np.arange(-80., 81., 10.), labels=[1,0,0,0], fontsize=10)
     m.drawmeridians(np.arange(-180., 181., 10.), labels=[0,0,0,1], fontsize=10)
 
+<<<<<<< HEAD
     # Add Coastlines, States, and Country Boundaries
     m.drawcoastlines()
     m.drawstates()
@@ -170,3 +178,5 @@ for d in range(0, 360, 50):
     plt.title('WB projections')
     plt.savefig('wb-projection-' + str(d) + '.png')
     #plt.show()
+=======
+>>>>>>> 324c86f7757a1959ecd6dc4e2fb603633aab0283
