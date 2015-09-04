@@ -39,7 +39,7 @@ for year in range(baseYearRange[0], baseYearRange[1]):
 somTrainingData = np.array(somTrainingData)
 
 print 'initializing SOM mapper'
-som = SimpleSOMMapper((3, 3), 150, learning_rate = 1e-5)
+som = SimpleSOMMapper((11, 11), 100, learning_rate = 1e-5)
 
 print 'training SOM'
 som.train(somTrainingData)
