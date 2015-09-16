@@ -1,13 +1,14 @@
 from mvpa2.suite import *
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
+import scipy.io
 import numpy
 import random
 import LoadDataYear
 
-latRange = [38,42]
-lonRange = [284,288]
-baseYearRange = [1990, 1995]
+latRange = [36,46]
+lonRange = [280,290]
+baseYearRange = [1990, 2000]
 futureYearRange = [2041, 2042]
 
 # training
@@ -16,30 +17,38 @@ somTrainingData = []
 # observations
 wetBulbData = []
 
-latGrid = numpy.meshgrid(range(latRange[0], latRange[1]))
-lonGrid = numpy.meshgrid(range(lonRange[0], lonRange[1]))
+latGrid = []
+lonGrid = []
 
 print 'loading data'
 for year in range(baseYearRange[0], baseYearRange[1]):
     print year
 
     for x in range(latRange[0], latRange[1]):
+        latRow = []
+        lonRow = []
         for y in range(lonRange[0], lonRange[1]):
             hussData = LoadDataYear.loadDataYear(year, 'ncep', 'shum', reallat = x, reallon = y)
             tasmaxData = LoadDataYear.loadDataYear(year, 'ncep', 'tmax', reallat = x, reallon = y)
             wbData = LoadDataYear.loadDataYear(year, 'ncep', 'wb', reallat = x, reallon = y)
-            
+
+            latRow.append(tasmaxData[0])
+            lonRow.append(tasmaxData[1])
+
             for r in range(len(hussData[2])):
                 element = []
                 element.append(hussData[2][r])
                 element.append(tasmaxData[2][r])
                 wetBulbData.append(wbData[2][r])
                 somTrainingData.append(element)
+        if year == baseYearRange[0]:
+            latGrid.append(latRow)
+            lonGrid.append(lonRow)
 
 somTrainingData = np.array(somTrainingData)
 
 print 'initializing SOM mapper'
-som = SimpleSOMMapper((11, 11), 100, learning_rate = 1e-5)
+som = SimpleSOMMapper((9, 9), 150, learning_rate = 1e-5)
 
 print 'training SOM'
 som.train(somTrainingData)
@@ -128,34 +137,36 @@ for year in range(0, len(nodeAssignments)):
     futureWbDownscaling.append(xData)
 
 futureWbDownscaling = np.array(futureWbDownscaling)
-print futureWbDownscaling[0,0:2,0:2,0]
 
-flatTLat = np.array(latGrid)
-flatTLon = np.array(lonGrid)
-flatTData = np.array(futureWbDownscaling[0,:,:,0])
+d = {"wb_downscale":futureWbDownscaling}
+scipy.io.savemat('wb_downscale.mat', mdict=d, appendmat=False, format='7')
 
-m = Basemap(width=10000000/5,height=7000000/5,
-            resolution='l',projection='stere',
-            lat_ts = 40, lat_0=sum(latRange)/2, lon_0 = sum(lonRange)/2)
+for d in range(0, 360, 50):
+    flatTLat = np.array(latGrid)
+    flatTLon = np.array(lonGrid)
+    flatTData = np.array(np.squeeze(futureWbDownscaling[0,:,:,d]))
 
-lon, lat = np.meshgrid(flatTLon[0,:], flatTLat[:,0])
-x, y = m(lon,lat)
-cs = m.pcolor(x,y,np.squeeze(flatTData), vmin=1e-5, vmax=5e-4)
+    m = Basemap(width=10000000/5,height=7000000/5,
+                resolution='l',projection='stere',
+                lat_ts = 40, lat_0=sum(latRange)/2, lon_0 = sum(lonRange)/2)
 
-# Add Grid Lines
-m.drawparallels(np.arange(-80., 81., 10.), labels=[1,0,0,0], fontsize=10)
-m.drawmeridians(np.arange(-180., 181., 10.), labels=[0,0,0,1], fontsize=10)
+    lon, lat = np.meshgrid(flatTLon[0,:], flatTLat[:,0])
+    x, y = m(lon,lat)
+    cs = m.pcolor(x,y,np.squeeze(flatTData), vmin=-5, vmax=25)
 
-# Add Coastlines, States, and Country Boundaries
-m.drawcoastlines()
-m.drawstates()
-m.drawcountries()
+    # Add Grid Lines
+    m.drawparallels(np.arange(-80., 81., 10.), labels=[1,0,0,0], fontsize=10)
+    m.drawmeridians(np.arange(-180., 181., 10.), labels=[0,0,0,1], fontsize=10)
 
-# Add Colorbar
-cbar = m.colorbar(cs, location='bottom', pad="10%")
+    # Add Coastlines, States, and Country Boundaries
+    m.drawcoastlines()
+    m.drawstates()
+    m.drawcountries()
 
-# Add Title
-plt.title('WB projections')
-plt.show()
+    # Add Colorbar
+    cbar = m.colorbar(cs, location='bottom', pad = "10%")
 
-
+    # Add Title
+    plt.title('WB projections')
+    plt.savefig('wb-projection-' + str(d) + '.png')
+    #plt.show()
