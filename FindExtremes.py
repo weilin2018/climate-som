@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jul 18 13:21:30 2015
+Finding Temperature Extremes
 
-@author: claireyun
-"""
 import GetDataMap
 import LoadDataYear
 import sys

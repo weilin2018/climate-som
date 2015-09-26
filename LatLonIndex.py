@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
 import scipy.io
 import sys # (if you want to call something specific) from sys import maxint
 

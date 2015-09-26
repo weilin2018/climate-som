@@ -1,16 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul  9 23:42:58 2015
-
-@author: JackieRyu
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 01 09:35:54 2015
-
-@author: ethan
-"""
 
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt

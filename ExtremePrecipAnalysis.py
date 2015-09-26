@@ -1,16 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jul 18 19:18:55 2015
 
-@author: JackieRyu
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jul 18 18:44:53 2015
-
-@author: JackieRyu
-"""
+Extreme Precipitation Analysis
 
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt

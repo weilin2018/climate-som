@@ -138,8 +138,8 @@ for year in range(0, len(nodeAssignments)):
 
 futureWbDownscaling = np.array(futureWbDownscaling)
 
-d = {"wb_downscale":futureWbDownscaling}
-scipy.io.savemat('wb_downscale.mat', mdict=d, appendmat=False, format='7')
+d = {'lat': latGrid, 'lon': lonGrid, 'data':futureWbDownscaling}
+scipy.io.savemat('wb_downscale.mat', mdict=d, appendmat=False, format='5')
 
 for d in range(0, 360, 50):
     flatTLat = np.array(latGrid)
