@@ -8,8 +8,8 @@ import LoadDataYear
 
 latRange = [36,46]
 lonRange = [280,290]
-baseYearRange = [1990, 2000]
-futureYearRange = [2041, 2042]
+baseYearRange = [1985, 2004]
+futureYearRange = [2040, 2060]
 
 # training
 somTrainingData = []
@@ -30,6 +30,7 @@ for year in range(baseYearRange[0], baseYearRange[1]):
         for y in range(lonRange[0], lonRange[1]):
             hussData = LoadDataYear.loadDataYear(year, 'ncep', 'shum', reallat = x, reallon = y)
             tasmaxData = LoadDataYear.loadDataYear(year, 'ncep', 'tmax', reallat = x, reallon = y)
+            pslData = LoadDataYear.loadDataYear(year, 'ncep', 'mslp', reallat = x, reallon = y)
             wbData = LoadDataYear.loadDataYear(year, 'ncep', 'wb', reallat = x, reallon = y)
 
             latRow.append(tasmaxData[0])
@@ -96,7 +97,7 @@ for year in range(futureYearRange[0], futureYearRange[1]):
         for y in range(lonRange[0], lonRange[1]):
             hussData = LoadDataYear.loadDataYear(year, 'gfdl-cm3', 'huss', reallat = x, reallon = y)
             tasmaxData = LoadDataYear.loadDataYear(year, 'gfdl-cm3', 'tasmax', reallat = x, reallon = y)
-
+            pslData = LoadDataYear.loadDataYear(year, 'gfdl-cm3', 'psl', reallat = x, reallon = y)
             nodeTime = []
 
             # find closest node
@@ -168,5 +169,5 @@ for d in range(0, 360, 50):
 
     # Add Title
     plt.title('WB projections')
-    plt.savefig('wb-projection-' + str(d) + '.png')
+    plt.savefig('wb-projection-past-' + str(d) + '.png')
     #plt.show()
